@@ -1,1 +1,1 @@
-# battleship
+The aim of this project is to create a battleship game which is playable vs an AI and with 2 players.
