@@ -1,5 +1,6 @@
 import { shipFactory } from "./ship.js";
 import { gameboardFactory } from "./gameboard.js";
+import { playerFactory } from "./player.js";
 
 const testShip = shipFactory(5, 0, false);
 const testBoard = gameboardFactory();
@@ -79,4 +80,12 @@ notAllSunk.receiveAttack([9, 1]);
 
 test("All ships sunk is false", () => {
   expect(notAllSunk.allShipsSunk()).toBe(false);
+});
+
+test("Creates player", () => {
+  expect(playerFactory("Steve")).toMatchObject({
+    name: "Steve",
+    turn: false,
+    myGameboard: {},
+  });
 });
