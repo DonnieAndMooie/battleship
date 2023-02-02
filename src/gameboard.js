@@ -50,4 +50,32 @@ function gameboardFactory() {
   };
 }
 
-export { gameboardFactory };
+function isMovePossible(position, direction, length, board) {
+  const currentSquare = position.slice();
+  for (let i = 0; i < length; i++) {
+    if (board.hasOwnProperty(currentSquare)) {
+      return false;
+    }
+    if (direction === "horizontal") {
+      currentSquare[0] += 1;
+    } else {
+      currentSquare[1] += 1;
+    }
+  }
+
+  if (direction === "horizontal") {
+    if (position[0] + length > 9) {
+      return false;
+    }
+
+    return true;
+  }
+
+  if (position[1] + length > 9) {
+    return false;
+  }
+
+  return true;
+}
+
+export { gameboardFactory, isMovePossible };
