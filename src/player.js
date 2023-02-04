@@ -1,3 +1,4 @@
+import { convertPosition } from "./DOM";
 import { gameboardFactory, isMovePossible } from "./gameboard";
 
 function playerFactory(name) {
@@ -12,9 +13,29 @@ function playerFactory(name) {
 }
 
 const computer = playerFactory("Computer");
-computer.generateGuess = function () {
-  const num1 = Math.floor(Math.random() * 9) + 1;
-  const num2 = Math.floor(Math.random() * 9) + 1;
+
+computer.generateGuess = function (board) {
+  let running = true;
+  let guess;
+  while (running) {
+    const num1 = Math.floor(Math.random() * 10);
+    const num2 = Math.floor(Math.random() * 10);
+    guess = [num1, num2].toString();
+    if (board[guess]) {
+      if (board[guess] !== "Hit" && board[guess] !== "Miss") {
+        running = false;
+      }
+    } else {
+      running = false;
+    }
+  }
+  guess = convertPosition(guess);
+  return guess;
+};
+
+computer.generateShipPosition = function () {
+  const num1 = Math.floor(Math.random() * 10);
+  const num2 = Math.floor(Math.random() * 10);
   const guess = [num1, num2];
   return guess;
 };
@@ -28,18 +49,14 @@ computer.generateDirection = function () {
 };
 
 computer.addShips = function (ships) {
-  console.log(ships);
   for (let i = 0; i < ships.length; i++) {
-    const computerMove = computer.generateGuess();
+    const computerMove = computer.generateShipPosition();
     const computerDirection = computer.generateDirection();
     const possible = isMovePossible(computerMove, computerDirection, ships[i].length, computer.myGameboard.gameboard);
     if (possible) {
-      console.log("Placing ship");
-      console.log(`${computerMove} ${computerDirection} ${ships[i].length}`);
       computer.myGameboard.placeShip(ships[i], computerMove, computerDirection);
     } else {
       i--;
-      console.log("CLASH");
     }
   }
 };

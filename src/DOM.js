@@ -1,3 +1,5 @@
+import { computer } from "./player";
+
 function createPlayerGrid() {
   const squares = [];
   const board = document.querySelector(".player-board");
@@ -51,11 +53,74 @@ function renderComputerBoard(board) {
   for (const square of squares) {
     const position = square.getAttribute("position");
     if (board.hasOwnProperty(position)) {
-      square.classList.add("ship");
+      square.classList.add("computer-ship");
     }
   }
 }
 
+function makeGuessWhenClicked(square) {
+  const output = document.querySelector(".output");
+  if (square.classList.contains("computer-ship")) {
+    square.classList.add("hit");
+    output.textContent = "It's a hit!";
+    const position = square.getAttribute("position");
+    const ship = computer.myGameboard.gameboard[position];
+    console.log(ship);
+    ship.hit();
+    if (ship.isSunk()) {
+      output.textContent = "You sunk the computer's ship!";
+    }
+  } else {
+    square.classList.add("miss");
+    output.textContent = "You missed.";
+  }
+}
+
+function makeComputerGuess(guess, board) {
+  const squares = document.querySelectorAll(".player-square");
+  const output = document.querySelector(".computer-output");
+  for (const square of squares) {
+    let position = square.getAttribute("position");
+    position = convertPosition(position);
+    if (position.toString() === guess.toString()) {
+      if (square.classList.contains("ship")) {
+        square.classList.add("hit");
+        output.textContent = "The computer hit your ship!";
+        board[position].hit();
+        if (board[position].isSunk()) {
+          output.textContent = "The computer sunk your ship!";
+        }
+        return;
+      }
+
+      square.classList.add("miss");
+      output.textContent = "The computer missed.";
+      return;
+    }
+  }
+}
+
+function clearDivs() {
+  const playerOutput = document.querySelector(".output");
+  const computerOutput = document.querySelector(".computer-output");
+  playerOutput.textContent = "";
+  computerOutput.textContent = "";
+}
+
+function playerWon() {
+  const playerOutput = document.querySelector(".output");
+  const computerOutput = document.querySelector(".computer-output");
+  playerOutput.textContent = "PLAYER WINS!";
+  computerOutput.textContent = "";
+}
+
+function computerWon() {
+  const playerOutput = document.querySelector(".output");
+  const computerOutput = document.querySelector(".computer-output");
+  playerOutput.textContent = "Computer WINS!";
+  computerOutput.textContent = "";
+}
+
 export {
-  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard,
+  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, makeGuessWhenClicked, makeComputerGuess, clearDivs, convertPosition, playerWon, computerWon,
 };

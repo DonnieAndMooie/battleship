@@ -26,7 +26,6 @@ function gameboardFactory() {
         return;
       }
       const ship = gameboard[positionString];
-      ship.hit();
       gameboard[positionString] = "Hit";
       return "Hit";
     }
@@ -37,7 +36,6 @@ function gameboardFactory() {
   const allShipsSunk = () => {
     let foundUnsunkShip = false;
     for (const [position, value] of Object.entries(gameboard)) {
-      console.log(value);
       if (value !== "Miss" && value !== "Hit") {
         foundUnsunkShip = true;
       }
