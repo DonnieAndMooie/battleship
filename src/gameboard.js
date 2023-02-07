@@ -62,14 +62,14 @@ function isMovePossible(position, direction, length, board) {
   }
 
   if (direction === "horizontal") {
-    if (position[0] + length > 9) {
+    if (position[0] + length > 10) {
       return false;
     }
 
     return true;
   }
 
-  if (position[1] + length > 9) {
+  if (position[1] + length > 10) {
     return false;
   }
 

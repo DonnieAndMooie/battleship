@@ -32,8 +32,8 @@ h1{
 
 .board{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(10, 1fr) ;
+    grid-template-rows: repeat(10, 1fr)
 }
 
 .ship{
@@ -53,4 +53,82 @@ h1{
     font-size: 32px;
     margin-bottom: 20px;
     height: 50px;
+}
+
+.hide{
+    display: none;
+}
+
+.play-game{
+    height: 200px;
+    font-size: 48px;
+    border-radius: 24px;
+    background-color: grey;
+
+}
+
+.play-again{
+    height: 120px;
+    font-size: 32px;
+    border-radius: 24px;
+    background-color: grey;
+}
+
+.ships{
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.ship-1{
+    height: 38px;
+    width: 190px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.ship-2{
+    height: 38px;
+    width: 152px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.ship-3{
+    height: 38px;
+    width: 114px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.ship-4{
+    height: 38px;
+    width: 114px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.ship-5{
+    height: 38px;
+    width: 114px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.drag-ship{
+    cursor: pointer
+}
+
+.hovered{
+    background-color: lightgrey;
+}
+
+
+.confirm-ships{
+    background-color: rgb(19, 132, 170);
+    color: white;
+    height: 80px;
+    font-size: 24px;
+    margin-top: 18px;
+    border-radius: 24px;
 }

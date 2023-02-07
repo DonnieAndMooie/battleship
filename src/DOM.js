@@ -1,5 +1,3 @@
-import { computer } from "./player";
-
 function createPlayerGrid() {
   const squares = [];
   const board = document.querySelector(".player-board");
@@ -58,14 +56,13 @@ function renderComputerBoard(board) {
   }
 }
 
-function makeGuessWhenClicked(square) {
+function makeGuessWhenClicked(square, computer) {
   const output = document.querySelector(".output");
   if (square.classList.contains("computer-ship")) {
     square.classList.add("hit");
     output.textContent = "It's a hit!";
     const position = square.getAttribute("position");
     const ship = computer.myGameboard.gameboard[position];
-    console.log(ship);
     ship.hit();
     if (ship.isSunk()) {
       output.textContent = "You sunk the computer's ship!";
@@ -112,6 +109,11 @@ function playerWon() {
   const computerOutput = document.querySelector(".computer-output");
   playerOutput.textContent = "PLAYER WINS!";
   computerOutput.textContent = "";
+
+  const playAgain = document.querySelector(".play-again");
+  playAgain.classList.remove("hide");
+
+  const computerSquares = document.querySelectorAll(".computer-square");
 }
 
 function computerWon() {
@@ -121,6 +123,41 @@ function computerWon() {
   computerOutput.textContent = "";
 }
 
+function resetBoards() {
+  const playerBoard = document.querySelector(".player-board");
+  const computerBoard = document.querySelector(".computer-board");
+  playerBoard.innerText = "";
+  computerBoard.innerText = "";
+
+  const playerOutput = document.querySelector(".output");
+  const computerOutput = document.querySelector(".computer-output");
+  playerOutput.textContent = "";
+  computerOutput.textContent = "";
+}
+
+function showShips() {
+  const ships = document.querySelectorAll(".drag-ship");
+  for (const ship of ships) {
+    ship.classList.remove("hide");
+  }
+}
+
+function showBoards() {
+  const playBtn = document.querySelector(".play-game");
+  playBtn.classList.add("hide");
+  const boardsDiv = document.querySelector(".boards-div");
+  boardsDiv.classList.remove("hide");
+}
+
+function createBtn() {
+  const confirmShipsBtn = document.createElement("button");
+  confirmShipsBtn.classList.add("confirm-ships");
+  confirmShipsBtn.textContent = "Confirm Ship Placements";
+  const buttonDiv = document.querySelector(".buttons");
+  buttonDiv.appendChild(confirmShipsBtn);
+  return confirmShipsBtn;
+}
+
 export {
-  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, makeGuessWhenClicked, makeComputerGuess, clearDivs, convertPosition, playerWon, computerWon,
+  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, makeGuessWhenClicked, makeComputerGuess, clearDivs, convertPosition, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn,
 };
