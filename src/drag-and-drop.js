@@ -1,5 +1,17 @@
 import { convertPosition, renderPlayerBoard } from "./DOM";
 import { isMovePossible } from "./gameboard";
+import ship1 from "./assets/images/ship-1.png";
+import ship2 from "./assets/images/ship-2.png";
+import ship3 from "./assets/images/ship-3.png";
+
+const ship1Img = new Image();
+ship1Img.src = ship1;
+
+const ship2Img = new Image();
+ship2Img.src = ship2;
+
+const ship3Img = new Image();
+ship3Img.src = ship3;
 
 function dragAndDrop(board, shipsArray) {
   board.numPlaced = 0;
@@ -24,9 +36,10 @@ function dragAndDrop(board, shipsArray) {
       const shipDragged = document.querySelector(".dragging");
       const index = shipDragged.getAttribute("index");
       const { length } = shipsArray[index];
-      if (isMovePossible(position, "horizontal", length, board.gameboard)) {
+      const direction = shipDragged.getAttribute("direction");
+      if (isMovePossible(position, direction, length, board.gameboard)) {
         square.classList.remove("hovered");
-        board.placeShip(shipsArray[index], position, "horizontal");
+        board.placeShip(shipsArray[index], position, direction);
         renderPlayerBoard(board.gameboard);
         shipDragged.classList.remove("dragging");
         shipsArray[index] = "placed";
@@ -39,7 +52,19 @@ function dragAndDrop(board, shipsArray) {
   }
 }
 
-function dragStart() {
+function dragStart(e) {
+  if (this.getAttribute("direction") === "vertical") {
+    const index = this.getAttribute("index");
+    if (index === "0") {
+      e.dataTransfer.setDragImage(ship1Img, 0, 0);
+    } else if (index === "1") {
+      e.dataTransfer.setDragImage(ship2Img, 0, 0);
+    } else {
+      e.dataTransfer.setDragImage(ship3Img, 0, 0);
+    }
+  } else {
+    e.dataTransfer.setDragImage(this, 0, 0);
+  }
   setTimeout(() => { this.classList.add("hide"); }, 0);
   this.classList.add("dragging");
 }
@@ -66,6 +91,13 @@ function dragLeave() {
 }
 
 function rotate() {
-  this.style.transform = "rotate(90deg)";
+  const direction = this.getAttribute("direction");
+  if (direction === "horizontal") {
+    this.style.transform = "rotate(90deg)";
+    this.setAttribute("direction", "vertical");
+  } else {
+    this.style.transform = "rotate(0deg)";
+    this.setAttribute("direction", "horizontal");
+  }
 }
 export { dragAndDrop };

@@ -1,14 +1,18 @@
 import "./styles.css";
-import { playerFactory, createComputer } from "./player";
+import {
+  playerFactory, createComputer, computerMove, resetVariables,
+} from "./player";
 import { gameboardFactory, isMovePossible } from "./gameboard";
 import {
-  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, detectClick, makeGuessWhenClicked, makeComputerGuess, clearDivs, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn,
+  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, detectClick, makeGuessWhenClicked, makeComputerGuess, clearDivs, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn, convertPosition,
 } from "./DOM";
 import { createShips, shipFactory } from "./ship";
 import { dragAndDrop } from "./drag-and-drop";
 
 const playBtn = document.querySelector(".play-game");
 playBtn.addEventListener("click", playGame);
+
+global.gameOver = false;
 
 function playGame() {
   const player = playerFactory("Player");
@@ -28,17 +32,15 @@ function playGame() {
       computer.addShips(computerShips);
       renderComputerBoard(computer.myGameboard.gameboard);
       const ComputerSquares = document.querySelectorAll(".computer-square");
-      let gameOver = false;
-
       for (const square of ComputerSquares) {
         square.addEventListener("click", () => {
-          if (!gameOver) {
+          if (!global.gameOver) {
             clearDivs();
             makeGuessWhenClicked(square, computer);
             computer.myGameboard.receiveAttack(square.getAttribute("position"));
             if (computer.myGameboard.allShipsSunk()) {
               playerWon();
-              gameOver = true;
+              global.gameOver = true;
             } else {
               const computerGuess = computer.generateGuess(player.myGameboard.gameboard);
               setTimeout(() => { computerMove(computerGuess, player.myGameboard); }, 500);
@@ -50,16 +52,10 @@ function playGame() {
   });
 }
 
-function computerMove(computerGuess, board) {
-  makeComputerGuess(computerGuess, board.gameboard);
-  board.receiveAttack(computerGuess);
-  if (board.allShipsSunk()) {
-    computerWon();
-  }
-}
-
 const playAgainBtn = document.querySelector(".play-again");
 playAgainBtn.addEventListener("click", () => {
+  global.gameOver = false;
+  resetVariables();
   playAgainBtn.classList.add("hide");
   resetBoards();
   playGame();

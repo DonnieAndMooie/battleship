@@ -86,13 +86,14 @@ function makeComputerGuess(guess, board) {
         board[position].hit();
         if (board[position].isSunk()) {
           output.textContent = "The computer sunk your ship!";
+          return "Sunk";
         }
-        return;
+        return "Hit";
       }
 
       square.classList.add("miss");
       output.textContent = "The computer missed.";
-      return;
+      return "Miss";
     }
   }
 }
@@ -121,6 +122,9 @@ function computerWon() {
   const computerOutput = document.querySelector(".computer-output");
   playerOutput.textContent = "Computer WINS!";
   computerOutput.textContent = "";
+  const playAgain = document.querySelector(".play-again");
+  playAgain.classList.remove("hide");
+  global.gameOver = true;
 }
 
 function resetBoards() {
@@ -133,6 +137,12 @@ function resetBoards() {
   const computerOutput = document.querySelector(".computer-output");
   playerOutput.textContent = "";
   computerOutput.textContent = "";
+
+  const ships = document.querySelectorAll(".drag-ship");
+  for (const ship of ships) {
+    ship.setAttribute("direction", "horizontal");
+    ship.style.transform = "rotate(0deg)";
+  }
 }
 
 function showShips() {
