@@ -8,6 +8,7 @@ import {
 } from "./DOM";
 import { createShips, shipFactory } from "./ship";
 import { dragAndDrop } from "./drag-and-drop";
+import { playTwoPlayer, resetGame } from "./2-player";
 
 const playBtn = document.querySelector(".play-game");
 playBtn.addEventListener("click", playGame);
@@ -15,6 +16,8 @@ playBtn.addEventListener("click", playGame);
 global.gameOver = false;
 
 function playGame() {
+  const play2PlayerBtn = document.querySelector(".play-2-player");
+  play2PlayerBtn.classList.add("hide");
   const player = playerFactory("Player");
   const computer = createComputer();
   computer.myGameboard.numPlaced = 0;
@@ -60,3 +63,9 @@ playAgainBtn.addEventListener("click", () => {
   resetBoards();
   playGame();
 });
+
+const playTwoPlayerBtn = document.querySelector(".play-2-player");
+playTwoPlayerBtn.addEventListener("click", playTwoPlayer);
+
+const playAgain2PlayerBtn = document.querySelector(".play-again-2-player");
+playAgain2PlayerBtn.addEventListener("click", resetGame);

@@ -1,4 +1,6 @@
-import { convertPosition, renderPlayerBoard } from "./DOM";
+import {
+  convertPosition, renderComputerBoard, renderPlayer2Board, renderPlayerBoard,
+} from "./DOM";
 import { isMovePossible } from "./gameboard";
 import ship1 from "./assets/images/ship-1.png";
 import ship2 from "./assets/images/ship-2.png";
@@ -13,10 +15,15 @@ ship2Img.src = ship2;
 const ship3Img = new Image();
 ship3Img.src = ship3;
 
-function dragAndDrop(board, shipsArray) {
+function dragAndDrop(board, shipsArray, player) {
   board.numPlaced = 0;
   const ships = document.querySelectorAll(".drag-ship");
-  const squares = document.querySelectorAll(".player-square");
+  let squares;
+  if (player === 2) {
+    squares = document.querySelectorAll(".computer-square");
+  } else {
+    squares = document.querySelectorAll(".player-square");
+  }
 
   for (const ship of ships) {
     ship.addEventListener("dragstart", dragStart);
@@ -40,7 +47,12 @@ function dragAndDrop(board, shipsArray) {
       if (isMovePossible(position, direction, length, board.gameboard)) {
         square.classList.remove("hovered");
         board.placeShip(shipsArray[index], position, direction);
-        renderPlayerBoard(board.gameboard);
+        if (player === 2) {
+          renderPlayer2Board(board.gameboard);
+        } else {
+          renderPlayerBoard(board.gameboard);
+        }
+
         shipDragged.classList.remove("dragging");
         shipsArray[index] = "placed";
         board.numPlaced++;
@@ -100,4 +112,5 @@ function rotate() {
     this.setAttribute("direction", "horizontal");
   }
 }
+
 export { dragAndDrop };

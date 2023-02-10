@@ -56,6 +56,17 @@ function renderComputerBoard(board) {
   }
 }
 
+function renderPlayer2Board(board) {
+  const squares = document.querySelectorAll(".computer-square");
+  for (const square of squares) {
+    const position = square.getAttribute("position");
+    if (board.hasOwnProperty(position)) {
+      square.classList.add("computer-ship");
+      square.classList.add("ship");
+    }
+  }
+}
+
 function makeGuessWhenClicked(square, computer) {
   const output = document.querySelector(".output");
   if (square.classList.contains("computer-ship")) {
@@ -65,7 +76,7 @@ function makeGuessWhenClicked(square, computer) {
     const ship = computer.myGameboard.gameboard[position];
     ship.hit();
     if (ship.isSunk()) {
-      output.textContent = "You sunk the computer's ship!";
+      output.textContent = "You sunk the enemy ship!";
     }
   } else {
     square.classList.add("miss");
@@ -168,6 +179,40 @@ function createBtn() {
   return confirmShipsBtn;
 }
 
+function showBoardOne() {
+  const showBoard = document.querySelector(".player-board");
+  showBoard.classList.remove("hide");
+  const hideBoard = document.querySelector(".computer-board");
+  hideBoard.classList.add("hide");
+}
+
+function showBoardTwo() {
+  const showBoard = document.querySelector(".computer-board");
+  showBoard.classList.remove("hide");
+  const hideBoard = document.querySelector(".player-board");
+  hideBoard.classList.add("hide");
+}
+
+function hideBoards() {
+  const boardsDiv = document.querySelector(".boards-div");
+  boardsDiv.classList.add("hide");
+}
+
+function hideShips() {
+  const ships = document.querySelectorAll(".ship");
+  for (const ship of ships) {
+    ship.classList.remove("ship");
+    ship.classList.add("computer-ship");
+  }
+}
+
+function makeShipsHorizontal() {
+  const ships = document.querySelectorAll(".drag-ship");
+  for (const ship of ships) {
+    ship.style.transform = "rotate(0deg)";
+    ship.setAttribute("direction", "horizontal");
+  }
+}
 export {
-  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, makeGuessWhenClicked, makeComputerGuess, clearDivs, convertPosition, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn,
+  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, makeGuessWhenClicked, makeComputerGuess, clearDivs, convertPosition, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn, showBoardOne, showBoardTwo, hideBoards, renderPlayer2Board, hideShips, makeShipsHorizontal,
 };
