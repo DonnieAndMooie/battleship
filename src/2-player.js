@@ -1,10 +1,10 @@
 import {
   createBtn,
   createComputerGrid,
-  createPlayerGrid, hideBoards, hideShips, makeGuessWhenClicked, makeShipsHorizontal, renderComputerBoard, renderPlayerBoard, showBoardOne, showBoards, showBoardTwo, showPlayer2Ships, showShips,
+  createPlayerGrid, hideBoards, hideShips, makeGuessWhenClicked, makeShipsHorizontal, showBoardOne, showBoards, showBoardTwo, showShips,
 } from "./DOM";
 import { dragAndDrop } from "./drag-and-drop";
-import { createComputer, playerFactory } from "./player";
+import { playerFactory } from "./player";
 import { createShips } from "./ship";
 
 let currentTurn = 1;

@@ -2,11 +2,10 @@ import "./styles.css";
 import {
   playerFactory, createComputer, computerMove, resetVariables,
 } from "./player";
-import { gameboardFactory, isMovePossible } from "./gameboard";
 import {
-  createPlayerGrid, createComputerGrid, renderPlayerBoard, renderComputerBoard, detectClick, makeGuessWhenClicked, makeComputerGuess, clearDivs, playerWon, computerWon, resetBoards, showShips, showBoards, createBtn, convertPosition,
+  createPlayerGrid, createComputerGrid, renderComputerBoard, makeGuessWhenClicked, clearDivs, playerWon, resetBoards, showShips, showBoards, createBtn,
 } from "./DOM";
-import { createShips, shipFactory } from "./ship";
+import { createShips } from "./ship";
 import { dragAndDrop } from "./drag-and-drop";
 import { playTwoPlayer, resetGame } from "./2-player";
 
